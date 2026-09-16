@@ -1,0 +1,30 @@
+# Git ignore file for Cyberion Defense Labs Engagement
+
+# Datasets raw binary archives and directory
+datasets/
+
+# Private analyst walkthrough & explainer guide (never push to GitHub)
+PROJECT_WALKTHROUGH_GUIDE.md
+*EXPLAINER*
+*GUIDE*
+
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Temporary extraction files
+extracted_prd.txt
+scratch/
+*.tmp
