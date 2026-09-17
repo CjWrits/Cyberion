@@ -1,0 +1,38 @@
+{
+  "rule_id": "bc5f23b7-7515-42b3-af7e-ae53aaa6ce4c",
+  "title": "Correlation: Endpoint PowerShell Socket Correlated with Network TLS Beaconing",
+  "severity": "critical",
+  "tags": [
+    "attack.execution",
+    "attack.command_and_control",
+    "attack.t1059.001",
+    "attack.t1071.001",
+    "attack.t1573.002"
+  ],
+  "total_matches_recorded": 1,
+  "sample_evidence": [
+    {
+      "type": "MultiSensorCorrelation",
+      "endpoint_telemetry": {
+        "line": 7664,
+        "timestamp": "2020-05-02 02:58:45.688",
+        "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "DestinationIp": "192.168.0.5",
+        "DestinationPort": "443",
+        "User": "DMEVALS\\pbeesly"
+      },
+      "network_telemetry": {
+        "ts": 1588207244.736422,
+        "uid": "CpnezL3085IfcJzSAe",
+        "id_orig_h": "10.0.1.6",
+        "id_resp_h": "192.168.0.4",
+        "id_resp_p": 8443,
+        "subject": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+        "issuer": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+        "validation_status": "self signed certificate",
+        "ja3": "e0fe397a5edfba9a6facc7c7b341f4eb"
+      },
+      "correlation_verdict": "CONFIRMED_ENDPOINT_SOCKET_TO_UNTRUSTED_TLS_BEACON"
+    }
+  ]
+}

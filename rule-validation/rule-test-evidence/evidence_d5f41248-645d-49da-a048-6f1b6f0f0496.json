@@ -1,0 +1,27 @@
+{
+  "rule_id": "d5f41248-645d-49da-a048-6f1b6f0f0496",
+  "title": "Suspicious Process Handle Access to LSASS Memory",
+  "severity": "high",
+  "tags": [
+    "attack.credential_access",
+    "attack.t1003.001"
+  ],
+  "total_matches_recorded": 1,
+  "sample_evidence": [
+    {
+      "record_num": 1,
+      "EventID": "10",
+      "source_file": "Defense Evasion/DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx",
+      "UtcTime": "2020-02-10 10:08:24.652",
+      "SourceProcessGUID": "{747f3d96-2b98-5e41-0000-00109c904700}",
+      "SourceProcessId": "5016",
+      "SourceThreadId": "8364",
+      "SourceImage": "c:\\Users\\Public\\BYOV\\ZAM64\\ppldump.exe",
+      "TargetProcessGUID": "{747f3d96-a042-5e41-0000-0010e4560000}",
+      "TargetProcessId": "624",
+      "TargetImage": "C:\\Windows\\system32\\lsass.exe",
+      "GrantedAccess": "0x001fffff",
+      "CallTrace": "C:\\Windows\\SYSTEM32\\ntdll.dll+9f844|C:\\Windows\\System32\\KERNELBASE.dll+1ef87|C:\\Windows\\System32\\KERNEL32.DLL+15310|c:\\Users\\Public\\BYOV\\ZAM64\\ppldump.exe+1b0c|c:\\Users\\Public\\BYOV\\ZAM64\\ppldump.exe+1844|c:\\Users\\Public\\BYOV\\ZAM64\\ppldump.exe+13a5|c:\\Users\\Public\\BYOV\\ZAM64\\ppldump.exe+150b|C:\\Windows\\System32\\KERNEL32.DLL+17974|C:\\Windows\\SYSTEM32\\ntdll.dll+6a271"
+    }
+  ]
+}

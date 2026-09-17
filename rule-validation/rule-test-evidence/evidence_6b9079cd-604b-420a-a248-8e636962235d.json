@@ -1,0 +1,66 @@
+{
+  "rule_id": "6b9079cd-604b-420a-a248-8e636962235d",
+  "title": "Active Directory DCSync Replication Request by Non-Machine Account",
+  "severity": "critical",
+  "tags": [
+    "attack.credential_access",
+    "attack.t1003.006"
+  ],
+  "total_matches_recorded": 3,
+  "sample_evidence": [
+    {
+      "record_num": 0,
+      "EventID": "4662",
+      "source_file": "Credential Access/CA_DCSync_4662.evtx",
+      "SubjectUserSid": "S-1-5-21-738609754-2819869699-4189121830-500",
+      "SubjectUserName": "Administrator",
+      "SubjectDomainName": "insecurebank",
+      "SubjectLogonId": "0x00000000040c6511",
+      "ObjectServer": "DS",
+      "ObjectType": "%{19195a5b-6da0-11d0-afd3-00c04fd930c9}",
+      "ObjectName": "%{c6faf700-bfe4-452a-a766-424f84c29583}",
+      "OperationType": "Object Access",
+      "HandleId": "0x0000000000000000",
+      "AccessList": "%%7688\n\t\t\t\t",
+      "AccessMask": "0x00000100",
+      "Properties": "%%7688\n\t\t{1131f6aa-9c07-11d1-f79f-00c04fc2dcd2}\n\t{19195a5b-6da0-11d0-afd3-00c04fd930c9}\n",
+      "AdditionalInfo": "-"
+    },
+    {
+      "record_num": 1,
+      "EventID": "4662",
+      "source_file": "Credential Access/CA_DCSync_4662.evtx",
+      "SubjectUserSid": "S-1-5-21-738609754-2819869699-4189121830-500",
+      "SubjectUserName": "Administrator",
+      "SubjectDomainName": "insecurebank",
+      "SubjectLogonId": "0x00000000040c6511",
+      "ObjectServer": "DS",
+      "ObjectType": "%{19195a5b-6da0-11d0-afd3-00c04fd930c9}",
+      "ObjectName": "%{c6faf700-bfe4-452a-a766-424f84c29583}",
+      "OperationType": "Object Access",
+      "HandleId": "0x0000000000000000",
+      "AccessList": "%%7688\n\t\t\t\t",
+      "AccessMask": "0x00000100",
+      "Properties": "%%7688\n\t\t{1131f6aa-9c07-11d1-f79f-00c04fc2dcd2}\n\t{19195a5b-6da0-11d0-afd3-00c04fd930c9}\n",
+      "AdditionalInfo": "-"
+    },
+    {
+      "record_num": 2,
+      "EventID": "4662",
+      "source_file": "Credential Access/CA_DCSync_4662.evtx",
+      "SubjectUserSid": "S-1-5-21-738609754-2819869699-4189121830-500",
+      "SubjectUserName": "Administrator",
+      "SubjectDomainName": "insecurebank",
+      "SubjectLogonId": "0x00000000040c6511",
+      "ObjectServer": "DS",
+      "ObjectType": "%{19195a5b-6da0-11d0-afd3-00c04fd930c9}",
+      "ObjectName": "%{c6faf700-bfe4-452a-a766-424f84c29583}",
+      "OperationType": "Object Access",
+      "HandleId": "0x0000000000000000",
+      "AccessList": "%%7688\n\t\t\t\t",
+      "AccessMask": "0x00000100",
+      "Properties": "%%7688\n\t\t{1131f6ad-9c07-11d1-f79f-00c04fc2dcd2}\n\t{19195a5b-6da0-11d0-afd3-00c04fd930c9}\n",
+      "AdditionalInfo": "-"
+    }
+  ]
+}

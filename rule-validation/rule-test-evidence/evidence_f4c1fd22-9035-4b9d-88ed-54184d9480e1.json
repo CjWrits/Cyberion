@@ -1,0 +1,25 @@
+{
+  "rule_id": "f4c1fd22-9035-4b9d-88ed-54184d9480e1",
+  "title": "Suspicious Persistence Registry Run Key Modification",
+  "severity": "high",
+  "tags": [
+    "attack.persistence",
+    "attack.t1547.001"
+  ],
+  "total_matches_recorded": 1,
+  "sample_evidence": [
+    {
+      "record_num": 0,
+      "EventID": "13",
+      "source_file": "Persistence/evasion_persis_hidden_run_keyvalue_sysmon_13.evtx",
+      "RuleName": "Persistence - Hidden Run value detected",
+      "EventType": "SetValue",
+      "UtcTime": "2020-07-04 14:18:58.231",
+      "ProcessGuid": "{747f3d96-8fd2-5f00-0000-0010c15d2200}",
+      "ProcessId": "3728",
+      "Image": "C:\\Users\\Public\\tools\\evasion\\a.exe",
+      "TargetObject": "HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\",
+      "Details": "\"c:\\windows\\tasks\\taskhost.exe\""
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "rule_id": "cacaf252-f706-446a-8b88-0516e962cfb4",
+  "title": "Windows Security or System Audit Log Cleared",
+  "severity": "high",
+  "tags": [
+    "attack.defense_evasion",
+    "attack.t1070.001"
+  ],
+  "total_matches_recorded": 1,
+  "sample_evidence": [
+    {
+      "record_num": 0,
+      "EventID": "1102",
+      "source_file": "Defense Evasion/DE_1102_security_log_cleared.evtx"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "rule_id": "ab9c4e58-f323-4524-b02c-44d8ef3d6e02",
+  "title": "C# Compiler Invoked by PowerShell for On-The-Fly Compilation",
+  "severity": "medium",
+  "tags": [
+    "attack.defense_evasion",
+    "attack.execution",
+    "attack.t1027.004",
+    "attack.t1059.001"
+  ],
+  "total_matches_recorded": 2,
+  "sample_evidence": [
+    {
+      "line": 7533,
+      "timestamp": "2020-05-02 02:58:45.297",
+      "ParentImage": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "Image": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe",
+      "CommandLine": "\"C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe\" /noconfig /fullpaths @\"C:\\Users\\pbeesly\\AppData\\Local\\Temp\\qkbkqqbs\\qkbkqqbs.cmdline\""
+    },
+    {
+      "line": 66069,
+      "timestamp": "2020-05-02 03:08:03.260",
+      "ParentImage": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "Image": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe",
+      "CommandLine": "\"C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe\" /noconfig /fullpaths @\"C:\\Users\\pbeesly\\AppData\\Local\\Temp\\0piklvia\\0piklvia.cmdline\""
+    }
+  ]
+}

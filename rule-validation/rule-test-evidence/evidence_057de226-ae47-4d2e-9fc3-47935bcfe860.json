@@ -1,0 +1,52 @@
+{
+  "rule_id": "057de226-ae47-4d2e-9fc3-47935bcfe860",
+  "title": "Masquerading Process Command Line via Right-to-Left Override Character",
+  "severity": "high",
+  "tags": [
+    "attack.defense_evasion",
+    "attack.t1036.002"
+  ],
+  "total_matches_recorded": 99,
+  "sample_evidence": [
+    {
+      "line": 372,
+      "timestamp": "2020-05-02 02:55:56.157",
+      "Image": "C:\\ProgramData\\victim\\\u00e2\u20ac\u00aecod.3aka3.scr",
+      "CommandLine": "\"C:\\ProgramData\\victim\\\u00e2\u20ac\u00aecod.3aka3.scr\" /S",
+      "ParentCommandLine": "C:\\windows\\Explorer.EXE",
+      "User": "DMEVALS\\pbeesly"
+    },
+    {
+      "line": 380,
+      "timestamp": "2020-05-02 02:55:56.151",
+      "Image": "C:\\ProgramData\\victim\\\u00e2\u20ac\u00aecod.3aka3.scr",
+      "CommandLine": "",
+      "ParentCommandLine": "",
+      "User": null
+    },
+    {
+      "line": 381,
+      "timestamp": "2020-05-02 02:55:56.151",
+      "Image": "C:\\ProgramData\\victim\\\u00e2\u20ac\u00aecod.3aka3.scr",
+      "CommandLine": "",
+      "ParentCommandLine": "",
+      "User": null
+    },
+    {
+      "line": 382,
+      "timestamp": "2020-05-02 02:55:56.151",
+      "Image": "C:\\ProgramData\\victim\\\u00e2\u20ac\u00aecod.3aka3.scr",
+      "CommandLine": "",
+      "ParentCommandLine": "",
+      "User": null
+    },
+    {
+      "line": 383,
+      "timestamp": "2020-05-02 02:55:56.151",
+      "Image": "C:\\ProgramData\\victim\\\u00e2\u20ac\u00aecod.3aka3.scr",
+      "CommandLine": "",
+      "ParentCommandLine": "",
+      "User": null
+    }
+  ]
+}

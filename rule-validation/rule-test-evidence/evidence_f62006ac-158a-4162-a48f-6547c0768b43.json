@@ -1,0 +1,54 @@
+{
+  "rule_id": "f62006ac-158a-4162-a48f-6547c0768b43",
+  "title": "PowerShell Direct Outbound Network Socket to External IP",
+  "severity": "high",
+  "tags": [
+    "attack.command_and_control",
+    "attack.execution",
+    "attack.t1071.001",
+    "attack.t1059.001"
+  ],
+  "total_matches_recorded": 18,
+  "sample_evidence": [
+    {
+      "line": 7664,
+      "timestamp": "2020-05-02 02:58:45.688",
+      "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "DestinationIp": "192.168.0.5",
+      "DestinationPort": "443",
+      "User": "DMEVALS\\pbeesly"
+    },
+    {
+      "line": 7665,
+      "timestamp": "2020-05-02 02:58:46.099",
+      "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "DestinationIp": "192.168.0.5",
+      "DestinationPort": "443",
+      "User": "DMEVALS\\pbeesly"
+    },
+    {
+      "line": 69382,
+      "timestamp": "2020-05-02 03:08:04.601",
+      "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "DestinationIp": "23.4.15.75",
+      "DestinationPort": "443",
+      "User": "DMEVALS\\pbeesly"
+    },
+    {
+      "line": 69384,
+      "timestamp": "2020-05-02 03:08:04.793",
+      "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "DestinationIp": "72.21.81.200",
+      "DestinationPort": "443",
+      "User": "DMEVALS\\pbeesly"
+    },
+    {
+      "line": 88466,
+      "timestamp": "2020-05-02 03:08:30.100",
+      "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "DestinationIp": "23.4.15.75",
+      "DestinationPort": "443",
+      "User": "DMEVALS\\pbeesly"
+    }
+  ]
+}

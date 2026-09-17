@@ -1,0 +1,24 @@
+{
+  "rule_id": "01753072-e2ec-4d43-a3f8-1edf1ab511f0",
+  "title": "Directory Services Restore Mode Admin Password Reset Attempt",
+  "severity": "high",
+  "tags": [
+    "attack.persistence",
+    "attack.credential_access",
+    "attack.t1098"
+  ],
+  "total_matches_recorded": 1,
+  "sample_evidence": [
+    {
+      "record_num": 0,
+      "EventID": "4794",
+      "source_file": "Credential Access/4794_DSRM_password_change_t1098.evtx",
+      "SubjectUserSid": "S-1-5-21-1913345275-1711810662-261465553-500",
+      "SubjectUserName": "administrator",
+      "SubjectDomainName": "HQCORP",
+      "SubjectLogonId": "0x00000000002f336f",
+      "Workstation": "2016DC",
+      "Status": "0x00000000"
+    }
+  ]
+}

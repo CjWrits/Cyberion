@@ -1,0 +1,38 @@
+{
+  "rule_id": "38301c3f-4ba5-4217-9339-c27ff47e3944",
+  "title": "Explicit Credential Logon with NewCredentials via Pass-the-Hash",
+  "severity": "high",
+  "tags": [
+    "attack.lateral_movement",
+    "attack.defense_evasion",
+    "attack.t1550.002",
+    "attack.t1078"
+  ],
+  "total_matches_recorded": 1,
+  "sample_evidence": [
+    {
+      "record_num": 1,
+      "EventID": "4624",
+      "source_file": "Lateral Movement/LM_4624_mimikatz_sekurlsa_pth_source_machine.evtx",
+      "SubjectUserSid": "S-1-5-21-1587066498-1489273250-1035260531-1106",
+      "SubjectUserName": "user01",
+      "SubjectDomainName": "EXAMPLE",
+      "SubjectLogonId": "0x00000000018a7875",
+      "TargetUserSid": "S-1-5-21-1587066498-1489273250-1035260531-1106",
+      "TargetUserName": "user01",
+      "TargetDomainName": "EXAMPLE",
+      "TargetLogonId": "0x0000000004530f0f",
+      "LogonType": "9",
+      "LogonProcessName": "seclogo",
+      "AuthenticationPackageName": "Negotiate",
+      "LogonGuid": "{00000000-0000-0000-0000-000000000000}",
+      "TransmittedServices": "-",
+      "LmPackageName": "-",
+      "KeyLength": "0",
+      "ProcessId": "0x000003ec",
+      "ProcessName": "C:\\Windows\\System32\\svchost.exe",
+      "IpAddress": "::1",
+      "IpPort": "0"
+    }
+  ]
+}

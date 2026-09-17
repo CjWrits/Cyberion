@@ -1,0 +1,68 @@
+{
+  "rule_id": "67e22644-d440-4b97-b1bd-7216bd270178",
+  "title": "Outbound Encrypted C2 Session Using Self-Signed SSL/TLS Certificate",
+  "severity": "high",
+  "tags": [
+    "attack.command_and_control",
+    "attack.t1071.001",
+    "attack.t1573.002"
+  ],
+  "total_matches_recorded": 376,
+  "sample_evidence": [
+    {
+      "ts": 1588207244.736422,
+      "uid": "CpnezL3085IfcJzSAe",
+      "id_orig_h": "10.0.1.6",
+      "id_resp_h": "192.168.0.4",
+      "id_resp_p": 8443,
+      "subject": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "issuer": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "validation_status": "self signed certificate",
+      "ja3": "e0fe397a5edfba9a6facc7c7b341f4eb"
+    },
+    {
+      "ts": 1588207244.999383,
+      "uid": "CqmYNc2kgrFPwKsBc",
+      "id_orig_h": "10.0.1.6",
+      "id_resp_h": "192.168.0.4",
+      "id_resp_p": 8443,
+      "subject": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "issuer": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "validation_status": "self signed certificate",
+      "ja3": "e0fe397a5edfba9a6facc7c7b341f4eb"
+    },
+    {
+      "ts": 1588207245.008368,
+      "uid": "CifsuF3AXF0KyXoDVa",
+      "id_orig_h": "10.0.1.6",
+      "id_resp_h": "192.168.0.4",
+      "id_resp_p": 8443,
+      "subject": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "issuer": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "validation_status": "self signed certificate",
+      "ja3": "e0fe397a5edfba9a6facc7c7b341f4eb"
+    },
+    {
+      "ts": 1588207245.124479,
+      "uid": "C404ljFb2iQkhGlF8",
+      "id_orig_h": "10.0.1.6",
+      "id_resp_h": "192.168.0.4",
+      "id_resp_p": 8443,
+      "subject": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "issuer": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "validation_status": "self signed certificate",
+      "ja3": "e0fe397a5edfba9a6facc7c7b341f4eb"
+    },
+    {
+      "ts": 1588207245.134293,
+      "uid": "C4aXO4q1MIOvNcdzl",
+      "id_orig_h": "10.0.1.6",
+      "id_resp_h": "192.168.0.4",
+      "id_resp_p": 8443,
+      "subject": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "issuer": "emailAddress=synthesize@rempel.group.net,CN=rempel.group.net,OU=synthesize,O=Rempel Group,ST=SC,C=US",
+      "validation_status": "self signed certificate",
+      "ja3": "e0fe397a5edfba9a6facc7c7b341f4eb"
+    }
+  ]
+}
