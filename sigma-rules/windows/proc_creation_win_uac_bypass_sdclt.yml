@@ -1,0 +1,45 @@
+title: UAC Bypass via Sdclt DelegateExecute Hijacking
+id: 7d5fb47e-fea1-4173-b030-520a167c2bd5
+status: test
+description: |
+    Detects the execution of Windows Backup and Restore binary (sdclt.exe) spawning control.exe or script
+    interpreters (powershell.exe, cmd.exe) under abnormal parentage. Attackers leverage sdclt.exe to achieve
+    User Account Control (UAC) bypass by hijacking registry keys under HKCU:\Software\Classes\Folder\shell\open\command
+    with a DelegateExecute entry, resulting in elevated execution without a UAC prompt.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1548/002/
+    - https://enigma0x3.net/2017/03/17/fileless-uac-bypass-using-sdclt-exe/
+tags:
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.t1548.002
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_parent:
+        ParentImage|endswith:
+            - '\sdclt.exe'
+            - '\control.exe'
+    selection_child:
+        Image|endswith:
+            - '\powershell.exe'
+            - '\cmd.exe'
+            - '\pwsh.exe'
+            - '\cscript.exe'
+            - '\wscript.exe'
+    condition: selection_parent and selection_child
+falsepositives:
+    - Legitimate Windows Backup and Restore tasks, though these typically launch dedicated backup engines rather than interactive shells.
+level: high
+fields:
+    - CommandLine
+    - Image
+    - ParentImage
+    - ParentCommandLine
+    - User
+# Severity Rationale:
+# Sdclt.exe and Control.exe are legitimate administrative management interfaces that should never spawn PowerShell
+# or Command Prompt directly in production environments. Any such child process indicates privilege escalation via UAC bypass.

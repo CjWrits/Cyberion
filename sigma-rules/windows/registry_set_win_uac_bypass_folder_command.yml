@@ -1,0 +1,44 @@
+title: UAC Bypass Registry Hijack in Folder Shell Open Command
+id: 7cb39dc7-ae81-47a1-b36c-2581534b9a17
+status: test
+description: |
+    Detects registry modifications targeting the Folder shell open command key (HKCU:\Software\Classes\Folder\shell\open\command)
+    or the creation of a DelegateExecute value. Adversaries manipulate this user-controllable registry location to intercept
+    elevated explorer or backup shell handlers, enabling silent code execution at High integrity.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1548/002/
+    - https://github.com/OTRF/Security-Datasets/tree/master/datasets/compound/apt29
+tags:
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.t1548.002
+logsource:
+    category: registry_set
+    product: windows
+detection:
+    selection_key:
+        TargetObject|contains:
+            - 'Classes\Folder\shell\open\command'
+            - 'Classes\Folder\shell\explore\command'
+    selection_value:
+        - TargetObject|endswith: '\(Default)'
+        - TargetObject|endswith: '\DelegateExecute'
+        - Details|contains:
+            - 'powershell'
+            - 'cmd.exe'
+            - '.exe'
+            - '.dll'
+    condition: selection_key and selection_value
+falsepositives:
+    - Highly anomalous. Rare third-party archive or shell manager installations configuring non-standard folder handlers.
+level: high
+fields:
+    - TargetObject
+    - Details
+    - Image
+    - ProcessGuid
+# Severity Rationale:
+# Modifying Folder shell handlers within HKCU is a well-established User Account Control (UAC) bypass vector.
+# Standard software registers handlers under HKLM during administrative installation, making user-level modifications suspicious.

@@ -1,0 +1,56 @@
+title: Remote Administrative Share File Write Operation via SMB
+id: 833d9d64-5164-42f3-879b-b7b5e8e135cf
+status: test
+description: |
+    Detects Windows Event ID 5145 where a client writes or copies an executable binary, script, or payload
+    file across a remote administrative network share (such as ADMIN$ or C$). Threat actors and lateral movement
+    frameworks (e.g., PsExec, Impacket wmiexec/smbexec) write temporary payload binaries or batch scripts
+    to administrative shares prior to invoking them via remote service control or WMI.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1021/002/
+    - https://attack.mitre.org/techniques/T1570/
+    - https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES
+tags:
+    - attack.lateral_movement
+    - attack.t1021.002
+    - attack.t1570
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_event:
+        EventID: 5145
+    selection_share:
+        ShareName|endswith:
+            - '\ADMIN$'
+            - '\C$'
+    selection_access:
+        AccessMask|contains:
+            - '0x2'       # WriteData / AddFile
+            - '0x120116'  # Generic Write
+            - '0x12019f'
+    selection_extension:
+        RelativeTargetName|endswith:
+            - '.exe'
+            - '.bat'
+            - '.cmd'
+            - '.ps1'
+            - '.vbs'
+            - '.dll'
+    condition: selection_event and selection_share and selection_access and selection_extension
+falsepositives:
+    - Automated enterprise configuration management tools (e.g., SCCM, PDQ Deploy, Tanium) pushing software updates across network shares.
+level: medium
+fields:
+    - EventID
+    - SubjectUserName
+    - SubjectDomainName
+    - IpAddress
+    - ShareName
+    - RelativeTargetName
+    - AccessMask
+# Severity Rationale:
+# Writing executable code directly into remote administrative shares is the classic signature of SMB-based lateral movement.
+# While enterprise software distribution systems also perform this, monitoring non-approved source IPs yields immediate true positives.

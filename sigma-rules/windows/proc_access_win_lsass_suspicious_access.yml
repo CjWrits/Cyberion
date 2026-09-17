@@ -1,0 +1,49 @@
+title: Suspicious Process Handle Access to LSASS Memory
+id: d5f41248-645d-49da-a048-6f1b6f0f0496
+status: test
+description: |
+    Detects process handle requests to the Local Security Authority Subsystem Service (lsass.exe) with high-risk
+    memory access rights (such as PROCESS_VM_READ, PROCESS_QUERY_INFORMATION, or PROCESS_ALL_ACCESS). Attackers
+    and offensive tools (e.g., Mimikatz, Procdump, Dumpert) query LSASS virtual memory to harvest plaintext credentials,
+    Kerberos tickets, and NTLM password hashes.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1003/001/
+    - https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES
+tags:
+    - attack.credential_access
+    - attack.t1003.001
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection_target:
+        TargetImage|endswith: '\lsass.exe'
+    selection_access:
+        GrantedAccess|contains:
+            - '0x10'       # PROCESS_VM_READ
+            - '0x1410'     # PROCESS_VM_READ | PROCESS_QUERY_INFORMATION
+            - '0x1010'     # PROCESS_VM_READ | PROCESS_QUERY_LIMITED_INFORMATION
+            - '0x1F0FFF'   # PROCESS_ALL_ACCESS
+            - '0x1F1FFF'
+            - '0x143a'
+    filter_legitimate:
+        SourceImage|endswith:
+            - '\csrss.exe'
+            - '\services.exe'
+            - '\wininit.exe'
+            - '\svchost.exe'
+            - '\msmpeng.exe'
+    condition: selection_target and selection_access and not filter_legitimate
+falsepositives:
+    - Endpoint Detection and Response (EDR) agents, privileged security monitoring utilities, or backup agents inspecting system authentication components.
+level: high
+fields:
+    - SourceImage
+    - TargetImage
+    - GrantedAccess
+    - CallTrace
+# Severity Rationale:
+# Direct memory access to LSASS is the primary precursor to credential theft and domain escalation. Legitimate non-security
+# applications have no requirement to read virtual memory allocated to the Local Security Authority Subsystem.

@@ -1,0 +1,47 @@
+title: Suspicious Persistence Registry Run Key Modification
+id: f4c1fd22-9035-4b9d-88ed-54184d9480e1
+status: test
+description: |
+    Detects the creation or modification of Windows Registry Run or RunOnce keys used to establish system persistence.
+    Adversaries add payloads to HKCU\Software\Microsoft\Windows\CurrentVersion\Run or HKLM equivalents so their malicious
+    code executes automatically every time a user logs into the operating system.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1547/001/
+    - https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES
+tags:
+    - attack.persistence
+    - attack.t1547.001
+logsource:
+    category: registry_set
+    product: windows
+detection:
+    selection_path:
+        TargetObject|contains:
+            - '\Software\Microsoft\Windows\CurrentVersion\Run\'
+            - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
+    selection_suspicious:
+        - TargetObject|contains: '\ '  # Hidden null or leading space evasion
+        - Details|contains:
+            - 'powershell'
+            - 'cmd.exe'
+            - 'wscript'
+            - 'cscript'
+            - 'mshta'
+            - 'rundll32'
+            - 'AppData\Local\Temp'
+            - 'C:\ProgramData\'
+            - 'C:\Users\Public\'
+    condition: selection_path and selection_suspicious
+falsepositives:
+    - Legitimate software installers configuring background startup tasks, updater utilities, or communication clients.
+level: high
+fields:
+    - TargetObject
+    - Details
+    - Image
+    - ProcessGuid
+# Severity Rationale:
+# Run keys executing directly from world-writable directories (Temp, Public, ProgramData) or invoking script engines
+# bypass standard software installation practices and are characteristic of persistent malware.

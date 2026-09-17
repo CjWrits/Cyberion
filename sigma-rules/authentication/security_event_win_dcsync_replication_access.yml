@@ -1,0 +1,43 @@
+title: Active Directory DCSync Replication Request by Non-Machine Account
+id: 6b9079cd-604b-420a-a248-8e636962235d
+status: test
+description: |
+    Detects Active Directory directory service access events (Event ID 4662) requesting directory replication
+    extended rights (DS-Replication-Get-Changes or DS-Replication-Get-Changes-All) initiated by accounts that
+    are not domain controller machine accounts. Attackers execute DCSync (via Mimikatz or Impacket) to impersonate
+    a domain controller and replicate Active Directory password hashes (including KRBTGT) over the network.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1003/006/
+    - https://github.com/sbousseaden/EVTX-ATTACK-SAMPLES
+tags:
+    - attack.credential_access
+    - attack.t1003.006
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_event:
+        EventID: 4662
+    selection_guids:
+        Properties|contains:
+            - '1131f6aa-9c07-11d1-f79f-00c04fc2dcd2'  # DS-Replication-Get-Changes-All
+            - '1131f6ad-9c07-11d1-f79f-00c04fc2dcd2'  # DS-Replication-Get-Changes
+            - '89e95b76-444d-4c62-991a-0205a5b3fb40'  # DS-Replication-Get-Changes-In-Filtered-Set
+    filter_dc:
+        SubjectUserName|endswith: '$'
+    condition: selection_event and selection_guids and not filter_dc
+falsepositives:
+    - Legitimate directory synchronization servers (e.g., Azure AD Connect / Entra Connect service accounts) or authorized domain controller migration agents.
+level: critical
+fields:
+    - EventID
+    - SubjectUserName
+    - SubjectDomainName
+    - ObjectName
+    - Properties
+    - AccessMask
+# Severity Rationale:
+# DCSync allows complete extraction of all Active Directory credential material, including the Kerberos Key Distribution
+# Center hash (krbtgt), which enables creation of Golden Tickets. A successful DCSync represents complete domain compromise.

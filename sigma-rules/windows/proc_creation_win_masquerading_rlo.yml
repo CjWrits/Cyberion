@@ -1,0 +1,48 @@
+title: Masquerading Process Command Line via Right-to-Left Override Character
+id: 057de226-ae47-4d2e-9fc3-47935bcfe860
+status: test
+description: |
+    Detects process creation events where the process command line or executable name contains the Unicode
+    Right-to-Left Override (RLO) character [U+202E]. Attackers use the RLO character to disguise dangerous file
+    extensions (such as .scr, .exe, .bat) as benign document extensions (such as .doc, .pdf, .xls), deceiving
+    both users and signature-based scanning engines.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1036/002/
+    - https://github.com/OTRF/Security-Datasets/tree/master/datasets/compound/apt29
+tags:
+    - attack.defense_evasion
+    - attack.t1036.002
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_rlo:
+        CommandLine|contains:
+            - '\u202e'
+            - '‮'
+            - 'â€®'
+            - '\xe2\x80\xae'
+            - 'cod.3aka3.scr'
+    selection_image:
+        Image|contains:
+            - '\u202e'
+            - '‮'
+            - 'â€®'
+            - '\xe2\x80\xae'
+            - 'cod.3aka3.scr'
+    condition: selection_rlo or selection_image
+falsepositives:
+    - Highly uncommon in legitimate enterprise environments. Rare localization utilities or multi-language localization testing tools.
+level: high
+fields:
+    - CommandLine
+    - Image
+    - ParentImage
+    - ParentCommandLine
+    - User
+# Severity Rationale:
+# The presence of a Right-to-Left Override character in a process path or command line is an extremely high-fidelity
+# indicator of intentional defense evasion and masquerading. Benign enterprise applications do not use RLO control
+# characters in execution arguments.
