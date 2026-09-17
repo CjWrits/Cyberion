@@ -1,0 +1,54 @@
+title: "Correlation: Endpoint PowerShell Socket Correlated with Network TLS Beaconing"
+id: bc5f23b7-7515-42b3-af7e-ae53aaa6ce4c
+status: test
+description: |
+    Correlates an endpoint process network event (Sysmon Event ID 3 for powershell.exe) with a network security monitoring event
+    (Zeek ssl.log recording an untrusted/self-signed certificate) connecting to the identical external IP and port within a 120-second window.
+    Correlating endpoint telemetry with wire-level network inspection provides decisive proof that the specific host process
+    is the originator of the untrusted C2 session.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1071/001/
+    - https://attack.mitre.org/techniques/T1059/001/
+    - https://attack.mitre.org/techniques/T1573/002/
+    - https://github.com/OTRF/Security-Datasets/tree/master/datasets/compound/apt29
+tags:
+    - attack.execution
+    - attack.command_and_control
+    - attack.t1059.001
+    - attack.t1071.001
+    - attack.t1573.002
+correlation:
+    type: temporal
+    rules:
+        - f62006ac-158a-4162-a48f-6547c0768b43  # Sysmon powershell socket
+        - 67e22644-d440-4b97-b1bd-7216bd270178  # Zeek self-signed SSL
+    group-by:
+        - DestinationIp
+        - DestinationPort
+    timespan: 120s
+    ordered: false
+detection:
+    event1_endpoint:
+        EventID: 3
+        Image|endswith:
+            - '\powershell.exe'
+            - '\pwsh.exe'
+    event2_network:
+        validation_status|contains: 'self signed certificate'
+    condition: event1_endpoint and event2_network within 120s
+falsepositives:
+    - Highly improbable in production environments. Requires a user to run PowerShell commands against an external self-signed TLS web server.
+level: critical
+fields:
+    - Image
+    - ProcessGuid
+    - User
+    - DestinationIp
+    - DestinationPort
+    - subject
+    - validation_status
+# Severity Rationale:
+# Multi-source corroboration between the host operating system kernel (Sysmon) and independent perimeter network sensors (Zeek)
+# eliminates single-source sensor blindness and confirms a live interactive or automated C2 channel.

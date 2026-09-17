@@ -1,0 +1,51 @@
+title: "Correlation: UAC Registry Bypass Preceding High-Integrity Shell Launch"
+id: fbf66860-6faf-4c5f-babb-5ed0417f6836
+status: test
+description: |
+    Correlates a registry modification targeting the Folder shell open command handler (HKCU:\Software\Classes\Folder\shell\open\command)
+    with a subsequent execution of sdclt.exe or control.exe spawning an elevated PowerShell or Command Prompt session within 60 seconds.
+    This multi-event correlation captures the complete end-to-end UAC bypass sequence rather than isolated indicators, dramatically
+    reducing false positives while confirming active privilege escalation.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1548/002/
+    - https://attack.mitre.org/techniques/T1059/001/
+    - https://github.com/OTRF/Security-Datasets/tree/master/datasets/compound/apt29
+tags:
+    - attack.privilege_escalation
+    - attack.execution
+    - attack.t1548.002
+    - attack.t1059.001
+correlation:
+    type: temporal
+    rules:
+        - 7cb39dc7-ae81-47a1-b36c-2581534b9a17  # Registry hijack rule
+        - 7d5fb47e-fea1-4173-b030-520a167c2bd5  # Sdclt child spawn rule
+    group-by:
+        - User
+    timespan: 60s
+    ordered: true
+detection:
+    event1_registry:
+        TargetObject|contains: 'Classes\Folder\shell\open\command'
+    event2_process:
+        ParentImage|endswith:
+            - '\sdclt.exe'
+            - '\control.exe'
+        Image|endswith:
+            - '\powershell.exe'
+            - '\cmd.exe'
+    condition: event1_registry followed by event2_process within 60s
+falsepositives:
+    - Extremely low to zero. Legitimate enterprise administrative actions do not dynamically create ad-hoc user shell handlers and immediately trigger them via system backup binaries.
+level: critical
+fields:
+    - User
+    - TargetObject
+    - Image
+    - CommandLine
+    - ParentImage
+# Severity Rationale:
+# Observing both the registry manipulation and the immediate execution of a child shell confirms an active, successful
+# privilege escalation exploit on the endpoint. Immediate incident response containment is warranted.

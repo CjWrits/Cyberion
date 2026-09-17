@@ -1,0 +1,64 @@
+title: PowerShell Direct Outbound Network Socket to External IP
+id: f62006ac-158a-4162-a48f-6547c0768b43
+status: test
+description: |
+    Detects instances where PowerShell (powershell.exe or pwsh.exe) initiates an outbound network socket connection
+    directly to a non-private (public) IP address. Attackers use PowerShell to download remote staging scripts,
+    establish interactive reverse shells, beacon to external C2 nodes, or exfiltrate reconnaissance data directly
+    over HTTP/HTTPS/TCP without proxy mediation.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1071/001/
+    - https://attack.mitre.org/techniques/T1059/001/
+    - https://github.com/OTRF/Security-Datasets/tree/master/datasets/compound/apt29
+tags:
+    - attack.command_and_control
+    - attack.execution
+    - attack.t1071.001
+    - attack.t1059.001
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection_process:
+        Image|endswith:
+            - '\powershell.exe'
+            - '\pwsh.exe'
+    filter_rfc1918:
+        DestinationIp|startswith:
+            - '10.'
+            - '172.16.'
+            - '172.17.'
+            - '172.18.'
+            - '172.19.'
+            - '172.20.'
+            - '172.21.'
+            - '172.22.'
+            - '172.23.'
+            - '172.24.'
+            - '172.25.'
+            - '172.26.'
+            - '172.27.'
+            - '172.28.'
+            - '172.29.'
+            - '172.30.'
+            - '172.31.'
+            - '192.168.1.'    # Local subnet filter
+            - '127.'
+            - '0:0:0:0:0:0:0:1'
+            - '::1'
+    condition: selection_process and not filter_rfc1918
+falsepositives:
+    - System administrators running scripts that interact with cloud management APIs (e.g., Azure PowerShell, AWS CLI modules) or downloading PowerShell Gallery packages.
+level: high
+fields:
+    - Image
+    - ProcessGuid
+    - User
+    - DestinationIp
+    - DestinationPort
+    - Protocol
+# Severity Rationale:
+# Direct outbound network egress initiated by PowerShell binaries bypasses standard web browser caching and inspection.
+# In standard enterprise baselines, interactive PowerShell processes should not reach external IPs directly.

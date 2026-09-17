@@ -1,0 +1,71 @@
+title: Outbound Encrypted C2 Session Using Self-Signed SSL/TLS Certificate
+id: 67e22644-d440-4b97-b1bd-7216bd270178
+status: test
+description: |
+    Detects outbound network TLS connections to external IP addresses where the destination server presents
+    a self-signed SSL/TLS certificate, an untrusted certificate authority, or an ad-hoc subject DN.
+    Adversaries deploying Command and Control (C2) servers (e.g., Cobalt Strike, Mythic, Empire) routinely
+    generate default or spoofed self-signed TLS certificates to encrypt communication channels and evade signature inspection.
+author: Cyberion Defense Labs
+date: 2026/09/16
+references:
+    - https://attack.mitre.org/techniques/T1071/001/
+    - https://attack.mitre.org/techniques/T1573/002/
+    - https://github.com/OTRF/Security-Datasets/tree/master/datasets/compound/apt29
+tags:
+    - attack.command_and_control
+    - attack.t1071.001
+    - attack.t1573.002
+logsource:
+    category: network_traffic
+    product: zeek
+    service: ssl
+detection:
+    selection_status:
+        validation_status|contains:
+            - 'self signed certificate'
+            - 'unable to get local issuer certificate'
+            - 'self signed certificate in certificate chain'
+    selection_port:
+        id_resp_p:
+            - 443
+            - 8443
+            - 4443
+            - 8080
+    filter_internal:
+        id_resp_h|startswith:
+            - '10.'
+            - '172.16.'
+            - '172.17.'
+            - '172.18.'
+            - '172.19.'
+            - '172.20.'
+            - '172.21.'
+            - '172.22.'
+            - '172.23.'
+            - '172.24.'
+            - '172.25.'
+            - '172.26.'
+            - '172.27.'
+            - '172.28.'
+            - '172.29.'
+            - '172.30.'
+            - '172.31.'
+            - '127.'
+    condition: selection_status and selection_port and not filter_internal
+falsepositives:
+    - Internal developer staging environments, network device management web UIs, or self-hosted lab appliances without public CA certificates.
+level: high
+fields:
+    - ts
+    - uid
+    - id_orig_h
+    - id_resp_h
+    - id_resp_p
+    - subject
+    - issuer
+    - validation_status
+    - ja3
+# Severity Rationale:
+# Enterprise egress traffic to public external infrastructure should validate against commercial Root CAs.
+# Outbound TLS handshakes accepting self-signed certificates indicate ad-hoc external servers typical of threat actor C2 listeners.
