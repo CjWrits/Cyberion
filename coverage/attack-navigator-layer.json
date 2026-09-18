@@ -1,0 +1,305 @@
+{
+  "name": "Cyberion Defense Labs - Detection Coverage Layer",
+  "versions": {
+    "attack": "14",
+    "navigator": "4.9.1",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "Comprehensive MITRE ATT&CK detection coverage assessment for Cyberion Defense Labs (CDL-DET-V2).",
+  "gradient": {
+    "colors": [
+      "#d62728",
+      "#ff7f0e",
+      "#2ca02c"
+    ],
+    "minValue": 1,
+    "maxValue": 3
+  },
+  "legendItems": [
+    {
+      "label": "Covered (Verified Rule & Evidence)",
+      "color": "#2ca02c"
+    },
+    {
+      "label": "Partially Covered (Partial Telemetry)",
+      "color": "#ff7f0e"
+    },
+    {
+      "label": "Not Covered (Telemetry Gap)",
+      "color": "#d62728"
+    }
+  ],
+  "techniques": [
+    {
+      "techniqueID": "T1566",
+      "subtechniqueID": "T1566.001",
+      "tactic": "initial-access",
+      "score": 1,
+      "color": "#d62728",
+      "comment": "Status: Not Covered | Rule: N/A | Notes: Requires Mail Transfer Agent (MTA) / Microsoft 365 Exchange audit logs and attachment hash sandboxing.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1190",
+      "subtechniqueID": null,
+      "tactic": "initial-access",
+      "score": 1,
+      "color": "#d62728",
+      "comment": "Status: Not Covered | Rule: N/A | Notes: Requires Web Application Firewall (WAF) or IIS/Nginx access logs correlating HTTP POST payloads.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1059",
+      "subtechniqueID": "T1059.001",
+      "tactic": "execution",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: f62006ac-158a-4162-a48f-6547c0768b43, d14d6b0c-8349-44c8-a5f8-2fc89299cb9e | Notes: High-fidelity coverage via Script Block Logging (4104) and Sysmon network connection tracing.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1059",
+      "subtechniqueID": "T1059.003",
+      "tactic": "execution",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: 7d5fb47e-fea1-4173-b030-520a167c2bd5 | Notes: Covered when spawned from anomalous administrative parents; standalone benign admin cmd.exe unmonitored.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1204",
+      "subtechniqueID": "T1204.002",
+      "tactic": "execution",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: 057de226-ae47-4d2e-9fc3-47935bcfe860 | Notes: Detects disguised executable launches via RLO; standard weaponized documents without RLO require sandbox telemetry.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1047",
+      "subtechniqueID": null,
+      "tactic": "execution",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: N/A | Notes: WMI provider operational logs present; dedicated Sigma rule pending baseline filtering of SCCM queries.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1547",
+      "subtechniqueID": "T1547.001",
+      "tactic": "persistence",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: f4c1fd22-9035-4b9d-88ed-54184d9480e1 | Notes: Detects hidden run keys, leading spaces, and script invocations originating from writable paths.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1053",
+      "subtechniqueID": "T1053.005",
+      "tactic": "persistence",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: N/A | Notes: Monitored via CLI execution; requires Windows Security EID 4698 (A scheduled task was created) for XML payload inspection.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1098",
+      "subtechniqueID": null,
+      "tactic": "persistence",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 01753072-e2ec-4d43-a3f8-1edf1ab511f0 | Notes: Detects backdoor preparation via Directory Services Restore Mode (DSRM) administrator password modifications.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1136",
+      "subtechniqueID": "T1136.001",
+      "tactic": "persistence",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: N/A | Notes: Security EID 4720 captured; requires threshold tuning against automated service provisioning scripts.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1548",
+      "subtechniqueID": "T1548.002",
+      "tactic": "privilege-escalation",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 7d5fb47e-fea1-4173-b030-520a167c2bd5, 7cb39dc7-ae81-47a1-b36c-2581534b9a17, fbf66860-6faf-4c5f-babb-5ed0417f6836 | Notes: Comprehensive atomic and multi-event temporal correlation rules detect registry hijack and child process launch.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1134",
+      "subtechniqueID": null,
+      "tactic": "privilege-escalation",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: 38301c3f-4ba5-4217-9339-c27ff47e3944 | Notes: Detects explicit logon token elevations; in-memory duplicate token API calls without process spawn unmonitored.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1068",
+      "subtechniqueID": null,
+      "tactic": "privilege-escalation",
+      "score": 1,
+      "color": "#d62728",
+      "comment": "Status: Not Covered | Rule: N/A | Notes: Requires kernel-level memory integrity telemetry (HVCI) or specialized driver loading signatures.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1036",
+      "subtechniqueID": "T1036.002",
+      "tactic": "defense-evasion",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 057de226-ae47-4d2e-9fc3-47935bcfe860 | Notes: Detects Unicode U+202E and multi-byte representations across executable paths and command lines.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1027",
+      "subtechniqueID": "T1027.003",
+      "tactic": "defense-evasion",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: d14d6b0c-8349-44c8-a5f8-2fc89299cb9e | Notes: Detects assembly loading and pixel array decoding logic inside PowerShell.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1027",
+      "subtechniqueID": "T1027.004",
+      "tactic": "defense-evasion",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: ab9c4e58-f323-4524-b02c-44d8ef3d6e02 | Notes: Detects C# on-the-fly compiler execution initiated by script interpreters.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1070",
+      "subtechniqueID": "T1070.001",
+      "tactic": "defense-evasion",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: cacaf252-f706-446a-8b88-0516e962cfb4 | Notes: Detects Security log cleared (1102) and System log cleared (104).",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1562",
+      "subtechniqueID": "T1562.001",
+      "tactic": "defense-evasion",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: cacaf252-f706-446a-8b88-0516e962cfb4 | Notes: Detects audit log erasure; Windows Defender tampering registry keys require dedicated Sysmon 13 rule.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1003",
+      "subtechniqueID": "T1003.001",
+      "tactic": "credential-access",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: d5f41248-645d-49da-a048-6f1b6f0f0496, 7b4581c2-d581-4986-b697-1ae7c04a9dcd | Notes: Detects unauthorized process handle creation with PROCESS_VM_READ access mask.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1003",
+      "subtechniqueID": "T1003.006",
+      "tactic": "credential-access",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 6b9079cd-604b-420a-a248-8e636962235d | Notes: Detects DS-Replication-Get-Changes-All extended rights requests originating from non-DC accounts.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1558",
+      "subtechniqueID": "T1558.003",
+      "tactic": "credential-access",
+      "score": 1,
+      "color": "#d62728",
+      "comment": "Status: Not Covered | Rule: N/A | Notes: Requires Windows Security EID 4769 filtering for Ticket Encryption Type 0x17 (RC4-HMAC) on SPNs.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1110",
+      "subtechniqueID": "T1110.001",
+      "tactic": "credential-access",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: N/A | Notes: Windows Security EID 4625 ingested; thresholding / velocity aggregation rule required in SIEM backend.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1550",
+      "subtechniqueID": "T1550.002",
+      "tactic": "lateral-movement",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 38301c3f-4ba5-4217-9339-c27ff47e3944, 7b4581c2-d581-4986-b697-1ae7c04a9dcd | Notes: Detects explicit logon type 9 with Advapi/seclogo authentication packages.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1021",
+      "subtechniqueID": "T1021.002",
+      "tactic": "lateral-movement",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 833d9d64-5164-42f3-879b-b7b5e8e135cf, 7b4581c2-d581-4986-b697-1ae7c04a9dcd | Notes: Detects remote executable and script file writes across ADMIN$ and C$ shares.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1021",
+      "subtechniqueID": "T1021.001",
+      "tactic": "lateral-movement",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: N/A | Notes: Captured in TerminalServices Operational logs; requires correlation with perimeter VPN IP sources.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1570",
+      "subtechniqueID": null,
+      "tactic": "lateral-movement",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 833d9d64-5164-42f3-879b-b7b5e8e135cf | Notes: Detects file drop stages of remote tool execution across internal administrative shares.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1071",
+      "subtechniqueID": "T1071.001",
+      "tactic": "command-and-control",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 67e22644-d440-4b97-b1bd-7216bd270178, f62006ac-158a-4162-a48f-6547c0768b43, bc5f23b7-7515-42b3-af7e-ae53aaa6ce4c | Notes: Full host-to-wire corroboration detecting outbound HTTP/TLS beaconing.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1573",
+      "subtechniqueID": "T1573.002",
+      "tactic": "command-and-control",
+      "score": 3,
+      "color": "#2ca02c",
+      "comment": "Status: Covered | Rule: 67e22644-d440-4b97-b1bd-7216bd270178, bc5f23b7-7515-42b3-af7e-ae53aaa6ce4c | Notes: Detects non-public / ad-hoc self-signed X.509 certificates and untrusted CAs.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1071",
+      "subtechniqueID": "T1071.004",
+      "tactic": "command-and-control",
+      "score": 2,
+      "color": "#ff7f0e",
+      "comment": "Status: Partially Covered | Rule: N/A | Notes: Basic query logging present; algorithmic DNS tunneling detection requires Shannon entropy calculation.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1090",
+      "subtechniqueID": "T1090.001",
+      "tactic": "command-and-control",
+      "score": 1,
+      "color": "#d62728",
+      "comment": "Status: Not Covered | Rule: N/A | Notes: Requires endpoint network shim telemetry (e.g., Sysmon EID 3 socket binding to localhost proxy ports).",
+      "enabled": true
+    }
+  ]
+}
